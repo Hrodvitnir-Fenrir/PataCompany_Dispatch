@@ -1,31 +1,24 @@
-import { ActivityType, Client, Events, Guild } from "discord.js";
+import { ActivityType, Client, Events, Guild, Message, TextChannel } from "discord.js";
 import { config } from "dotenv";
 import * as path from "path";
+import { initMessage } from "./pannelManager/initMessage";
+import { getTheLastEvent } from "./pannelManager/scheduleFetcher";
+import { verificationUpdate } from "./pannelManager/updatePannel";
 config({ path: path.resolve(__dirname, "..", ".env") });
 
 export const client = new Client({ intents: ["Guilds"] });
+
+export let messagePannel: Message;
 
 client.once("ready", async () => {
 	console.log(`Bot ${client.user.tag} is online.`);
 
 	const guild = await client.guilds.fetch("897141056087404584");
-	const events = await guild.scheduledEvents.fetch();
+	const channel = await guild.channels.fetch("1273505346979102832") as TextChannel;
+	messagePannel = await initMessage(channel);
 
-	console.log(events);
+	const event = await getTheLastEvent(guild);
+	await verificationUpdate(event, messagePannel);
 });
-
-// Apparement les events ne sont pas encore supportés par discord.js
-
-// client.once("guildScheduledEventUpdate", async (guild) => {
-// 	console.log(guild);
-// });
-
-// client.once("guildScheduledEventDelete", async (guild) => {
-// 	console.log(guild);
-// });
-
-// client.once("guildScheduledEventCreate", async (guild) => {
-// 	console.log(guild);
-// });
 
 client.login(process.env.DISCORD_TOKEN);
