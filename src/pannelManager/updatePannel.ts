@@ -7,7 +7,7 @@ interface PannelStructure {
 	roleSelectionRow: ActionRowBuilder<StringSelectMenuBuilder>;
 }
 
-async function embedMaker(eventName: string, eventId: string, eventTimestamp: number): Promise<PannelStructure> {
+export async function embedMaker(eventName: string, eventId: string, eventTimestamp: number): Promise<PannelStructure> {
 	const embed = new EmbedBuilder()
 		.setColor(`${eventId === "1273518831536574535" ? "#ffA500" : "#449e48"}`)
 		.setTitle(eventName)
@@ -17,7 +17,7 @@ async function embedMaker(eventName: string, eventId: string, eventTimestamp: nu
 			IP : patapignouf.youdontcare.com:2302
 			TeamSpeak : [cliquez pour rejoindre](https://tinyurl.com/47r9ur8z)`)
 		.setImage("https://i.imgur.com/XqQEGD0.png")
-		.setFooter({ text: eventTimestamp.toString(), iconURL: "https://i.imgur.com/Aq9AzvO.png" });
+		.setFooter({ text: `[${eventId}, ${eventTimestamp}]`, iconURL: "https://i.imgur.com/Aq9AzvO.png" });
 
 	const squadButton = new ButtonBuilder()
 		.setCustomId("noSquad")
@@ -33,12 +33,13 @@ async function embedMaker(eventName: string, eventId: string, eventTimestamp: nu
 	const leaveSquad = new ButtonBuilder()
 		.setCustomId("leaveSquad")
 		.setLabel("Quitter l'escouade")
-		.setStyle(ButtonStyle.Danger)
-		.setDisabled(true);
+		.setStyle(ButtonStyle.Danger);
 
 	const roleSelection = new StringSelectMenuBuilder()
 		.setCustomId("roleSelection")
 		.setPlaceholder("Sélectionnez votre rôle")
+		.setMaxValues(2)
+		.setMinValues(1)
 		.addOptions(
 			new StringSelectMenuOptionBuilder()
 				.setLabel("Team lead")
@@ -111,11 +112,15 @@ async function embedMaker(eventName: string, eventId: string, eventTimestamp: nu
 
 export async function verificationUpdate(event: GuildScheduledEvent<GuildScheduledEventStatus>, message: Message) {
 	const eventTimestamp = event.scheduledStartTimestamp;
-	const messageTimestampLink = message.embeds[0]?.footer?.text;
+	const currentTimestamp = message.embeds[0]?.footer?.text ? JSON.parse(message.embeds[0]?.footer?.text)[1] : undefined;
 
-	if (eventTimestamp.toString() !== messageTimestampLink) {
+	if (eventTimestamp === undefined || eventTimestamp.toString() != currentTimestamp) {
 		const pannel = await embedMaker(event.name, event.id, eventTimestamp);
-		message.edit({ content: "", embeds: [pannel.embed], components: [pannel.squadJoinRow, pannel.squadManagementRow, pannel.roleSelectionRow] });
+		await message.edit({ 
+			content: "", 
+			embeds: [pannel.embed], 
+			components: [pannel.squadJoinRow, pannel.squadManagementRow, pannel.roleSelectionRow] 
+		});
 	} else {
 		console.log("Message is up to date.");
 	}
