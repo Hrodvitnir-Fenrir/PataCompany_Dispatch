@@ -35,6 +35,8 @@ export async function getTheLastEvent(guild: Guild): Promise<GuildScheduledEvent
 		let event = await guild.scheduledEvents.fetch(id) as GuildScheduledEvent<GuildScheduledEventStatus>;
 		return event;
 
+		// Need to send the time form here and not the id, the fetch is really broken
+
 	} catch (error) {
 		console.error(error);
 		return null;
