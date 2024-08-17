@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, GuildScheduledEvent, GuildScheduledEventStatus, Message, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Collection, EmbedBuilder, GuildScheduledEvent, GuildScheduledEventStatus, Message, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from "discord.js";
 
 interface PannelStructure {
 	embed: EmbedBuilder;
@@ -110,17 +110,24 @@ export async function embedMaker(eventName: string, eventId: string, eventTimest
 	};
 }
 
-export async function verificationUpdate(event: GuildScheduledEvent<GuildScheduledEventStatus>, message: Message) {
+export async function verificationUpdate(event: GuildScheduledEvent<GuildScheduledEventStatus> | null, message: Message) {
+	if (event === null) {
+		console.log("No event found.");
+		message.edit({ content: "Aucune opération de prévu pour le moment.", embeds: [], components: [] });
+		return;
+	}
+
 	const eventTimestamp = event.scheduledStartTimestamp;
 	const currentTimestamp = message.embeds[0]?.footer?.text ? JSON.parse(message.embeds[0]?.footer?.text)[1] : undefined;
 
 	if (eventTimestamp === undefined || eventTimestamp.toString() != currentTimestamp) {
 		const pannel = await embedMaker(event.name, event.id, eventTimestamp);
 		await message.edit({ 
-			content: "", 
+			content: "",
 			embeds: [pannel.embed], 
 			components: [pannel.squadJoinRow, pannel.squadManagementRow, pannel.roleSelectionRow] 
 		});
+		console.log("Message updated.");
 	} else {
 		console.log("Message is up to date.");
 	}
