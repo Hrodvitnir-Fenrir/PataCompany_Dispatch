@@ -1,4 +1,5 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Collection, EmbedBuilder, GuildScheduledEvent, GuildScheduledEventStatus, Message, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from "discord.js";
+import { eventStructure } from "./scheduleFetcher";
 
 interface PannelStructure {
 	embed: EmbedBuilder;
@@ -9,7 +10,7 @@ interface PannelStructure {
 
 export async function embedMaker(eventName: string, eventId: string, eventTimestamp: number): Promise<PannelStructure> {
 	const embed = new EmbedBuilder()
-		.setColor(`${eventId === "1273518831536574535" ? "#ffA500" : "#449e48"}`)
+		.setColor("#449e48")
 		.setTitle(eventName)
 		.setAuthor({ name: "PataCompany" })
 		.setThumbnail("https://i.imgur.com/hqFhz0Q.png")
@@ -37,7 +38,7 @@ export async function embedMaker(eventName: string, eventId: string, eventTimest
 
 	const roleSelection = new StringSelectMenuBuilder()
 		.setCustomId("roleSelection")
-		.setPlaceholder("Sélectionnez votre rôle")
+		.setPlaceholder("Sélectionnez votre rôle [2 MAX]")
 		.setMaxValues(2)
 		.setMinValues(1)
 		.addOptions(
@@ -45,52 +46,52 @@ export async function embedMaker(eventName: string, eventId: string, eventTimest
 				.setLabel("Team lead")
 				.setDescription("Sitrep ?")
 				.setValue("lead")
-				.setEmoji("1273604837992300574"),
+				.setEmoji("1274659075329888329"),
 			new StringSelectMenuOptionBuilder()
 				.setLabel("Anti-tank")
 				.setDescription("Backblast !!")
 				.setValue("at")
-				.setEmoji("1273604853704298597"),
+				.setEmoji("1274659089372287006"),
 			new StringSelectMenuOptionBuilder()
 				.setLabel("Rifleman")
 				.setDescription("Pew pew")
 				.setValue("rifle")
-				.setEmoji("1273604860251471894"),
+				.setEmoji("1274659097366630482"),
 			new StringSelectMenuOptionBuilder()
 				.setLabel("Grenadier")
 				.setDescription("40mm dans la poche")
 				.setValue("grenadier")
-				.setEmoji("1273604866786328621"),
+				.setEmoji("1274659105729937559"),
 			new StringSelectMenuOptionBuilder()
 				.setLabel("Engineer")
 				.setDescription("IED en vue !")
 				.setValue("engineer")
-				.setEmoji("1273604874520629269"),
+				.setEmoji("1274659113250590740"),
 			new StringSelectMenuOptionBuilder()
 				.setLabel("Autorifleman")
 				.setDescription("\"Pew pew\" mais beaucoup plus")
 				.setValue("autorifleman")
-				.setEmoji("1273604894380527690"),
+				.setEmoji("1274659120011673681"),
 			new StringSelectMenuOptionBuilder()
 				.setLabel("Marksman")
 				.setDescription("Tire de loins")
 				.setValue("marksman")
-				.setEmoji("1273604901498519723"),
+				.setEmoji("1274659126374301759"),
 			new StringSelectMenuOptionBuilder()
 				.setLabel("Sniper")
 				.setDescription("Tire de encore plus loins")
 				.setValue("sniper")
-				.setEmoji("1273604908200755211"),
+				.setEmoji("1274659133165146142"),
 			new StringSelectMenuOptionBuilder()
 				.setLabel("Medic")
 				.setDescription("Bouchez les trous")
 				.setValue("medic")
-				.setEmoji("1273604914685149279"),
+				.setEmoji("1274659139699867669"),
 			new StringSelectMenuOptionBuilder()
 				.setLabel("Pilot")
 				.setDescription("Brrrrrrr !")
 				.setValue("pilot")
-				.setEmoji("1273604922633355401")
+				.setEmoji("1274659147031515136")
 		)
 
 	const firstRow = new ActionRowBuilder<ButtonBuilder>()
@@ -110,14 +111,14 @@ export async function embedMaker(eventName: string, eventId: string, eventTimest
 	};
 }
 
-export async function verificationUpdate(event: GuildScheduledEvent<GuildScheduledEventStatus> | null, message: Message) {
+export async function verificationUpdate(event: eventStructure | null, message: Message) {
 	if (event === null) {
+		// message.edit({ content: "Aucune opération de prévu pour le moment.", embeds: [], components: [] });
 		console.log("No event found.");
-		message.edit({ content: "Aucune opération de prévu pour le moment.", embeds: [], components: [] });
 		return;
 	}
 
-	const eventTimestamp = event.scheduledStartTimestamp;
+	const eventTimestamp = event.scheduledStartTime;
 	const currentTimestamp = message.embeds[0]?.footer?.text ? JSON.parse(message.embeds[0]?.footer?.text)[1] : undefined;
 
 	if (eventTimestamp === undefined || eventTimestamp.toString() != currentTimestamp) {
