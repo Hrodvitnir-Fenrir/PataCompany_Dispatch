@@ -14,6 +14,16 @@ export let messagePannel: Message;
 client.once("ready", async () => {
 	console.log(`Bot ${client.user.tag} is online.`);
 
+	client.user.setPresence({
+		status: "dnd",
+		activities: [
+			{
+				type: ActivityType.Watching,
+				name: "Dorgan faire des bêtises"
+			}
+		]
+	})
+
 	const guild = await client.guilds.fetch("897141056087404584");
 	const channel = await guild.channels.fetch("1273505346979102832") as TextChannel;
 	messagePannel = await initMessage(channel);
