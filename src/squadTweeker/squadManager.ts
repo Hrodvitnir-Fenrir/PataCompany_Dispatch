@@ -3,16 +3,16 @@ import { embedMaker } from "../pannelManager/updatePannel";
 
 const squadNames = [ "Alpha", "Bretelle", "Camelote", "Delirium", "E" ]
 const roleEmojis = {
-	lead: "<:lead:1273604837992300574>",
-	at: "<:at:1273604853704298597>",
-	rifle: "<:rifle:1273604860251471894>",
-	grenadier: "<:grenadier:1273604859469314055>",
-	engineer: "<:engineer:1273604874520629269>",
-	autorifleman: "<:autorifleman:1273604894380527690>",
-	marksman: "<:marksman:1273604901498519723>",
-	sniper: "<:sniper:1273604908200755211>",
-	medic: "<:medic:1273604914685149279>",
-	pilot: "<:pilot:1273604922633355401>"
+	lead: "<:lead:1274659075329888329>",
+	at: "<:at:1274659089372287006>",
+	rifle: "<:rifle:1274659097366630482>",
+	grenadier: "<:grenadier:1274659105729937559>",
+	engineer: "<:engineer:1274659113250590740>",
+	autorifleman: "<:autorifleman:1274659120011673681>",
+	marksman: "<:marksman:1274659126374301759>",
+	sniper: "<:sniper:1274659133165146142>",
+	medic: "<:medic:1274659139699867669>",
+	pilot: "<:pilot:1274659147031515136>"
 }
 
 export async function updateMessage(interaction: ButtonInteraction | StringSelectMenuInteraction, fields: APIEmbedField[]) {
