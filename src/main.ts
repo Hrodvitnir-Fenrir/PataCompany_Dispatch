@@ -24,17 +24,17 @@ client.once("ready", async () => {
 		]
 	})
 
-	const guild = await client.guilds.fetch("897141056087404584");
-	const channel = await guild.channels.fetch("1273505346979102832") as TextChannel;
+	const guild = await client.guilds.fetch("606191377067278359");
+	const channel = await guild.channels.fetch("800866648189829131") as TextChannel;
 	messagePannel = await initMessage(channel);
 
-	const event = await getTheLastEvent(guild);
-	await verificationUpdate(event, messagePannel);
+	// const event = await getTheLastEvent(guild);
+	// await verificationUpdate(event, messagePannel);
 
-	// setInterval(async () => {
-	// 	const event = await getTheLastEvent(guild);
-	// 	await verificationUpdate(event, messagePannel);
-	// }, 10 * 60 * 1000);
+	setInterval(async () => {
+		const event = await getTheLastEvent(guild);
+		await verificationUpdate(event, messagePannel);
+	}, 10 * 60 * 1000);
 });
 
 client.on(Events.InteractionCreate, async (interaction) => {
