@@ -28,8 +28,8 @@ client.once("ready", async () => {
 	const channel = await guild.channels.fetch("800866648189829131") as TextChannel;
 	messagePannel = await initMessage(channel);
 
-	// const event = await getTheLastEvent(guild);
-	// await verificationUpdate(event, messagePannel);
+	const event = await getTheLastEvent(guild);
+	await verificationUpdate(event, messagePannel);
 
 	setInterval(async () => {
 		const event = await getTheLastEvent(guild);
