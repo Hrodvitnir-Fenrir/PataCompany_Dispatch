@@ -37,7 +37,7 @@ export async function createSquad(interaction: ButtonInteraction) {
 	} else if (fileds.length != 0) {
 		fileds = await removeUser(interaction);
 	}
-	fileds.push({ name: `${squadNames[fileds.length]}`, value: `<@${interaction.user.id}>`, inline: true });
+	fileds.push({ name: `${squadNames[fileds.length]}`, value: `<@${interaction.user.id}>`, inline: false });
 
 	await updateMessage(interaction, fileds);
 }
