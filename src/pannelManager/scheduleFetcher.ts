@@ -28,6 +28,8 @@ export async function getTheLastEvent(guild: Guild): Promise<eventStructure | nu
 			};
 		});
 
+		console.log(eventsArray);
+
 		eventsArray.sort((a, b) => a.scheduledStartTime - b.scheduledStartTime);
 
 		for (const event of eventsArray) {
