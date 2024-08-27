@@ -14,9 +14,11 @@ export async function embedMaker(eventName: string, eventId: string, eventTimest
 		.setTitle(eventName)
 		.setAuthor({ name: "PataCompany" })
 		.setThumbnail("https://i.imgur.com/hqFhz0Q.png")
-		.setDescription(`Date et heure : <t:${eventTimestamp / 1000}:F>
-			IP : patapignouf.youdontcare.com:2302
-			TeamSpeak : [cliquez pour rejoindre](https://tinyurl.com/47r9ur8z)`)
+		.setDescription(`__Date et heure :__ <t:${eventTimestamp / 1000}:F>` + "\n" +
+			"__IP :__ patapignouf.youdontcare.com:2302" + "\n" +
+			"__TeamSpeak :__ [cliquez pour rejoindre](https://tinyurl.com/47r9ur8z)" + "\n" +
+			"__Canal radio :__\nCommandement: `40` | Alpha: `50` | Bretelle: `60` | Camelote: `70` | Delirium: `80`"
+			)
 		.setImage("https://i.imgur.com/XqQEGD0.png")
 		.setFooter({ text: `[${eventId}, ${eventTimestamp}]`, iconURL: "https://i.imgur.com/Aq9AzvO.png" });
 
@@ -121,7 +123,7 @@ export async function verificationUpdate(event: eventStructure | null, message: 
 	const eventTimestamp = event.scheduledStartTime;
 	const currentTimestamp = message.embeds[0]?.footer?.text ? JSON.parse(message.embeds[0]?.footer?.text)[1] : undefined;
 
-	if (eventTimestamp === undefined || eventTimestamp.toString() != currentTimestamp) {
+	if (currentTimestamp === undefined || eventTimestamp.toString() != currentTimestamp) {
 		const pannel = await embedMaker(event.name, event.id, eventTimestamp);
 		await message.edit({ 
 			content: "",
