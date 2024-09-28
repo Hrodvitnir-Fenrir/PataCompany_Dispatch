@@ -60,6 +60,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
 		if (!trustUsers.includes(interaction.user.id)) return interaction.reply({ content: "Vous n'avez pas la permission de faire ça.", ephemeral: true });
 		const event = await getTheLastEvent(interaction.guild);
 		await verificationUpdate(event, messagePannel);
+		await interaction.reply({ content: "Event mis à jour.", ephemeral: true });
 	}
 });
 
