@@ -26,12 +26,11 @@ client.once("ready", async () => {
 		]
 	})
 
-	const guild = await client.guilds.fetch("606191377067278359");
-	const channel = await guild.channels.fetch("800866648189829131") as TextChannel;
-	messagePannel = await initMessage(channel);
-
-	const event = await getTheLastEvent(guild);
-	await verificationUpdate(event, messagePannel);
+	// const guild = await client.guilds.fetch("606191377067278359");
+	// const channel = await guild.channels.fetch("800866648189829131") as TextChannel;
+	// messagePannel = await initMessage(channel);
+	// const event = await getTheLastEvent(guild);
+	// await verificationUpdate(event, messagePannel);
 });
 
 client.on(Events.InteractionCreate, async (interaction) => {
@@ -59,7 +58,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
 	if (interaction.customId === "update") {
 		if (!trustUsers.includes(interaction.user.id)) return interaction.reply({ content: "Vous n'avez pas la permission de faire ça.", ephemeral: true });
 		const event = await getTheLastEvent(interaction.guild);
-		await verificationUpdate(event, messagePannel);
+		await verificationUpdate(event, interaction.message);
 		await interaction.reply({ content: "Event mis à jour.", ephemeral: true });
 	}
 });
