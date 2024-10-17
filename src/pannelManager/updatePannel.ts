@@ -123,7 +123,7 @@ export async function verificationUpdate(event: eventStructure | null, message: 
 	const eventTimestamp = event.scheduledStartTime;
 	const currentTimestamp = message.embeds[0]?.footer?.text ? JSON.parse(message.embeds[0]?.footer?.text)[1] : undefined;
 
-	if (currentTimestamp === undefined || eventTimestamp.toString() != currentTimestamp) {
+	if (currentTimestamp === undefined || (eventTimestamp.toString() != currentTimestamp && currentTimestamp + 4 * 60 * 60 * 1000 < Date.now())) {
 		const pannel = await embedMaker(event.name, event.id, eventTimestamp);
 		await message.edit({ 
 			content: "",
