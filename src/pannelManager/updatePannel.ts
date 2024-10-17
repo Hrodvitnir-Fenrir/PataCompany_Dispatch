@@ -115,7 +115,6 @@ export async function embedMaker(eventName: string, eventId: string, eventTimest
 
 export async function verificationUpdate(event: eventStructure | null, message: Message) {
 	if (event === null) {
-		// message.edit({ content: "Aucune opération de prévu pour le moment.", embeds: [], components: [] });
 		console.log("No event found.");
 		return;
 	}
