@@ -26,7 +26,7 @@ export async function updateMessage(interaction: ButtonInteraction | StringSelec
 
 	pannel.embed.addFields(fields);
 
-	await interaction.update({ embeds: [pannel.embed], components: [buttonsSquadRaw, pannel.squadManagementRow, pannel.roleSelectionRow, pannel.updateRow] });
+	await interaction.update({ embeds: [pannel.embed], components: [buttonsSquadRaw, pannel.squadManagementRow, pannel.roleSelectionRow] });
 }
 
 export async function createSquad(interaction: ButtonInteraction) {

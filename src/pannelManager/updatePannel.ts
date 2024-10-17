@@ -6,7 +6,6 @@ interface PannelStructure {
 	squadJoinRow: ActionRowBuilder<ButtonBuilder>;
 	squadManagementRow: ActionRowBuilder<ButtonBuilder>;
 	roleSelectionRow: ActionRowBuilder<StringSelectMenuBuilder>;
-	updateRow: ActionRowBuilder<ButtonBuilder>;
 }
 
 export async function embedMaker(eventName: string, eventId: string, eventTimestamp: number): Promise<PannelStructure> {
@@ -97,11 +96,6 @@ export async function embedMaker(eventName: string, eventId: string, eventTimest
 				.setEmoji("1274659147031515136")
 		)
 
-	const update = new ButtonBuilder()
-		.setCustomId("update")
-		.setLabel("🔄")
-		.setStyle(ButtonStyle.Secondary);
-
 	const firstRow = new ActionRowBuilder<ButtonBuilder>()
 		.addComponents(squadButton)
 
@@ -111,15 +105,11 @@ export async function embedMaker(eventName: string, eventId: string, eventTimest
 	const thirdRow = new ActionRowBuilder<StringSelectMenuBuilder>()
 		.addComponents(roleSelection);
 
-	const fourthRow = new ActionRowBuilder<ButtonBuilder>()
-		.addComponents(update);
-
 	return {
 		embed: embed,
 		squadJoinRow: firstRow,
 		squadManagementRow: secondRow,
-		roleSelectionRow: thirdRow,
-		updateRow: fourthRow
+		roleSelectionRow: thirdRow
 	};
 }
 
@@ -138,7 +128,7 @@ export async function verificationUpdate(event: eventStructure | null, message: 
 		await message.edit({ 
 			content: "",
 			embeds: [pannel.embed], 
-			components: [pannel.squadJoinRow, pannel.squadManagementRow, pannel.roleSelectionRow, pannel.updateRow] 
+			components: [pannel.squadJoinRow, pannel.squadManagementRow, pannel.roleSelectionRow] 
 		});
 		console.log("Message updated.");
 	} else {

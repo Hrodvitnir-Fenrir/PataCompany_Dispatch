@@ -11,8 +11,6 @@ export const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIn
 
 export let messagePannel: Message;
 
-const trustUsers = ["236552969544269826", "382290051440181250", "354371346026987521", "229643102191747072", "169899983263236097"]
-
 client.once("ready", async () => {
 	console.log(`Bot ${client.user.tag} is online.`);
 
@@ -26,11 +24,17 @@ client.once("ready", async () => {
 		]
 	})
 
-	// const guild = await client.guilds.fetch("606191377067278359");
-	// const channel = await guild.channels.fetch("800866648189829131") as TextChannel;
-	// messagePannel = await initMessage(channel);
-	// const event = await getTheLastEvent(guild);
-	// await verificationUpdate(event, messagePannel);
+	const guild = await client.guilds.fetch("606191377067278359");
+	const channel = await guild.channels.fetch("800866648189829131") as TextChannel;
+	messagePannel = await initMessage(channel);
+
+	const event = await getTheLastEvent(guild);
+	await verificationUpdate(event, messagePannel);
+
+	setInterval(async () => {
+		const event = await getTheLastEvent(guild);
+		await verificationUpdate(event, messagePannel);
+	}, 10 * 60 * 1000);
 });
 
 client.on(Events.InteractionCreate, async (interaction) => {
@@ -53,13 +57,6 @@ client.on(Events.InteractionCreate, async (interaction) => {
 			}
 		});
 		await updateMessage(interaction, fields);
-	}
-
-	if (interaction.customId === "update") {
-		if (!trustUsers.includes(interaction.user.id)) return interaction.reply({ content: "Vous n'avez pas la permission de faire ça.", ephemeral: true });
-		const event = await getTheLastEvent(interaction.guild);
-		await verificationUpdate(event, interaction.message);
-		await interaction.reply({ content: "Event mis à jour.", ephemeral: true });
 	}
 });
 
