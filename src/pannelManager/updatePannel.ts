@@ -18,7 +18,7 @@ export async function embedMaker(eventName: string, eventId: string, eventTimest
 			"__IP :__ patapignouf.youdontcare.com:2302" + "\n" +
 			"__TeamSpeak :__ [cliquez pour rejoindre](https://tinyurl.com/47r9ur8z)" + "\n" +
 			"__Canal radio :__\nCommandement: `40` | Alpha: `50` | Bretelle: `60` | Camelote: `70` | Delirium: `80`"
-			)
+		)
 		.setImage("https://i.imgur.com/XqQEGD0.png")
 		.setFooter({ text: `[${eventId}, ${eventTimestamp}]`, iconURL: "https://i.imgur.com/Aq9AzvO.png" });
 
@@ -50,50 +50,65 @@ export async function embedMaker(eventName: string, eventId: string, eventTimest
 				.setValue("lead")
 				.setEmoji("1274659075329888329"),
 			new StringSelectMenuOptionBuilder()
-				.setLabel("Anti-tank")
-				.setDescription("Backblast !!")
-				.setValue("at")
-				.setEmoji("1274659089372287006"),
-			new StringSelectMenuOptionBuilder()
 				.setLabel("Rifleman")
 				.setDescription("Pew pew")
 				.setValue("rifle")
 				.setEmoji("1274659097366630482"),
-			new StringSelectMenuOptionBuilder()
-				.setLabel("Grenadier")
-				.setDescription("40mm dans la poche")
-				.setValue("grenadier")
-				.setEmoji("1274659105729937559"),
-			new StringSelectMenuOptionBuilder()
-				.setLabel("Engineer")
-				.setDescription("IED en vue !")
-				.setValue("engineer")
-				.setEmoji("1274659113250590740"),
 			new StringSelectMenuOptionBuilder()
 				.setLabel("Autorifleman")
 				.setDescription("\"Pew pew\" mais beaucoup plus")
 				.setValue("autorifleman")
 				.setEmoji("1274659120011673681"),
 			new StringSelectMenuOptionBuilder()
-				.setLabel("Marksman")
-				.setDescription("Tire de loins")
-				.setValue("marksman")
-				.setEmoji("1274659126374301759"),
-			new StringSelectMenuOptionBuilder()
-				.setLabel("Sniper")
-				.setDescription("Tire de encore plus loins")
-				.setValue("sniper")
-				.setEmoji("1274659133165146142"),
-			new StringSelectMenuOptionBuilder()
 				.setLabel("Medic")
 				.setDescription("Bouchez les trous")
 				.setValue("medic")
 				.setEmoji("1274659139699867669"),
 			new StringSelectMenuOptionBuilder()
+				.setLabel("Engineer")
+				.setDescription("IED en vue !")
+				.setValue("engineer")
+				.setEmoji("1274659113250590740"),
+			new StringSelectMenuOptionBuilder()
+				.setLabel("Grenadier")
+				.setDescription("40mm dans la poche")
+				.setValue("grenadier")
+				.setEmoji("1274659105729937559"),
+			new StringSelectMenuOptionBuilder()
+				.setLabel("Anti-tank")
+				.setDescription("Backblast !!")
+				.setValue("at")
+				.setEmoji("1274659089372287006"),
+			new StringSelectMenuOptionBuilder()
+				.setLabel("Radio operator")
+				.setDescription("Fen pour Pata ?")
+				.setValue("radio")
+				.setEmoji("1418871645392867418"),
+			new StringSelectMenuOptionBuilder()
+				.setLabel("Marksman")
+				.setDescription("Tire de loin")
+				.setValue("marksman")
+				.setEmoji("1274659126374301759"),
+			new StringSelectMenuOptionBuilder()
+				.setLabel("Sniper")
+				.setDescription("Tire de encore plus loin")
+				.setValue("sniper")
+				.setEmoji("1274659133165146142"),
+			new StringSelectMenuOptionBuilder()
+				.setLabel("Mortar")
+				.setDescription("Elevation de...1304")
+				.setValue("mortar")
+				.setEmoji("1418871637163380806"),
+			new StringSelectMenuOptionBuilder()
 				.setLabel("Pilot")
 				.setDescription("Brrrrrrr !")
 				.setValue("pilot")
-				.setEmoji("1274659147031515136")
+				.setEmoji("1274659147031515136"),
+			new StringSelectMenuOptionBuilder()
+				.setLabel("Drone operator")
+				.setDescription("Obama power")
+				.setValue("drone")
+				.setEmoji("1418871628258869368")
 		)
 
 	const firstRow = new ActionRowBuilder<ButtonBuilder>()
@@ -124,10 +139,10 @@ export async function verificationUpdate(event: eventStructure | null, message: 
 
 	if (currentTimestamp === undefined || (eventTimestamp.toString() != currentTimestamp && currentTimestamp + 4 * 60 * 60 * 1000 < Date.now())) {
 		const pannel = await embedMaker(event.name, event.id, eventTimestamp);
-		await message.edit({ 
+		await message.edit({
 			content: "",
-			embeds: [pannel.embed], 
-			components: [pannel.squadJoinRow, pannel.squadManagementRow, pannel.roleSelectionRow] 
+			embeds: [pannel.embed],
+			components: [pannel.squadJoinRow, pannel.squadManagementRow, pannel.roleSelectionRow]
 		});
 		console.log("Message updated.");
 	} else {
