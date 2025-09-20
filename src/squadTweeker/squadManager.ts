@@ -12,7 +12,10 @@ const roleEmojis = {
 	marksman: "<:marksman:1274659126374301759>",
 	sniper: "<:sniper:1274659133165146142>",
 	medic: "<:medic:1274659139699867669>",
-	pilot: "<:pilot:1274659147031515136>"
+	pilot: "<:pilot:1274659147031515136>",
+	radio: "<:radio:1418871645392867418>",
+	mortar: "<:mortar:1418871637163380806>",
+	drone: "<:drone:1418871628258869368>"
 }
 
 export async function updateMessage(interaction: ButtonInteraction | StringSelectMenuInteraction, fields: APIEmbedField[]) {
